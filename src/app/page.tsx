@@ -9,6 +9,7 @@ import { ArrowRight, CheckCircle, Clock, Shield, Star, MapPin, Play, Utensils, A
 import { useInstallApp } from '@/hooks/useInstallApp';
 import { useOrderAction } from '@/hooks/useOrderAction';
 import { AppDownloadModal } from '@/components/AppDownloadModal';
+import { AppDownloadsSection } from '@/components/AppDownloadsSection';
 import { motion } from 'framer-motion';
 
 export default function LandingPage() {
@@ -386,7 +387,7 @@ export default function LandingPage() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-6 justify-center items-center relative z-10"
             >
-              <button onClick={() => window.location.href = 'https://app.tiffica.xyz/home'} className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-full font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 transition-all text-center">
+              <button onClick={handleOrderClick} className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-full font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 transition-all text-center disabled:opacity-70" disabled={isMobile === null}>
                 GET STARTED NOW
               </button>
               <Link href="https://app.tiffica.xyz/login" className="w-full sm:w-auto backdrop-blur-md bg-black text-white border border-white/20 px-10 py-5 rounded-full font-black text-xl hover:bg-white hover:text-black transition-all text-center">
@@ -396,6 +397,9 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* App Downloads Section */}
+      <AppDownloadsSection />
 
       {/* App Download Modal */}
       <AppDownloadModal 

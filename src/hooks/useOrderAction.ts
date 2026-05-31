@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 export function useOrderAction() {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [isNativeApp, setIsNativeApp] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     // Detect if mobile
@@ -16,50 +13,54 @@ export function useOrderAction() {
     };
 
     setIsMobile(checkMobile());
-
-    // Check if native app is installed (NOT PWA)
-    // PWA runs in browser, so we only check for native app via custom scheme
-    const checkNativeApp = () => {
-      if ((window as any).tiffcaApp) {
-        return true;
-      }
-      return false;
-    };
-
-    setIsNativeApp(checkNativeApp());
   }, []);
 
   const handleOrderClick = () => {
     if (isMobile === null) return;
-
-    if (isMobile) {
-      // Mobile: check if NATIVE app is installed (NOT PWA)
-      if (isNativeApp) {
-        // Native app is installed, open it
-        window.location.href = 'tiffica://order';
-        // Fallback after 1 second if custom scheme doesn't work
-        setTimeout(() => {
-          router.push('/signup');
-        }, 1000);
-      } else {
-        // Native app not installed, go to signup (PWA will handle it)
-        router.push('/signup');
-      }
-    } else {
-      // Desktop: show modal
-      setShowModal(true);
-    }
+    // Always show the download modal
+    setShowModal(true);
   };
 
   const handleDownloadApp = () => {
-    // Trigger download - you can customize this based on your backend
-    // For now, just close the modal
-    setShowModal(false);
+    // Detect platform and offer direct download
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    const isAndroid = /android/i.test(userAgent.toLowerCase());
+    const isIOS = /iphone|ipad|ipod/i.test(userAgent.toLowerCase());
+
+    if (isAndroid) {
+      try {
+        // Option 1: Try direct download from your CDN/server
+        // Replace these URLs with your actual hosting
+        const apkUrl = 'https://github.com/yourusername/tiffica/releases/download/v1.0.0/tiffica-app.apk';
+        // Alternative: const apkUrl = 'https://download.tiffica.xyz/tiffica-app.apk';
+        
+        const link = document.createElement('a');
+        link.href = apkUrl;
+        link.download = 'tiffica-app.apk';
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        
+        // Cleanup
+        setTimeout(() => {
+          document.body.removeChild(link);
+        }, 100);
+      } catch (err) {
+        console.error('Download error:', err);
+        // Show error message
+        alert('Download failed. Please check your internet connection and try again.');
+      }
+    } else if (isIOS) {
+      // For iOS, direct to PWA
+      window.location.href = 'https://tiffica.vercel.app/home';
+    } else {
+      // Desktop - direct to web app
+      window.location.href = 'https://tiffica.vercel.app/home';
+    }
   };
 
   return {
     isMobile,
-    isNativeApp,
     showModal,
     setShowModal,
     handleOrderClick,
