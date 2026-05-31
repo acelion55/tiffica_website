@@ -29,10 +29,9 @@ export function useOrderAction() {
 
     if (isAndroid) {
       try {
-        // Option 1: Try direct download from your CDN/server
-        // Replace these URLs with your actual hosting
-        const apkUrl = 'https://github.com/yourusername/tiffica/releases/download/v1.0.0/tiffica-app.apk';
-        // Alternative: const apkUrl = 'https://download.tiffica.xyz/tiffica-app.apk';
+        // Direct APK download - update path based on your file location
+        // If APK is at: download.tiffica.xyz/tiffica-app.apk
+        const apkUrl = 'https://download.tiffica.xyz/tiffica-app.apk';
         
         const link = document.createElement('a');
         link.href = apkUrl;
@@ -47,7 +46,6 @@ export function useOrderAction() {
         }, 100);
       } catch (err) {
         console.error('Download error:', err);
-        // Show error message
         alert('Download failed. Please check your internet connection and try again.');
       }
     } else if (isIOS) {
