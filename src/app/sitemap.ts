@@ -3,7 +3,7 @@ import { SEO_PAGE_SLUGS } from '@/data/seo-pages';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tiffica.xyz';
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5005/api';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
   // Public static routes
   const staticRoutes: MetadataRoute.Sitemap = [

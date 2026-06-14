@@ -4,13 +4,12 @@ import Link from 'next/link';
 import { Mail, Phone, Instagram, Twitter, Facebook, ArrowRight, ArrowUpRight, Globe, ShieldCheck, Download, Loader2 } from 'lucide-react';
 import { useInstallApp } from '@/hooks/useInstallApp';
 import { usePathname } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
 import { motion } from 'framer-motion';
 
 import { SEO_PAGES } from '@/data/seo-pages';
 
 // Routes where footer should be shown (web pages only)
-const FOOTER_ROUTES = ['/', '/about', '/contact', '/blog', '/menu', '/terms', '/privacy', '/faq', '/jaipur-tiffin'];
+const FOOTER_ROUTES = ['/', '/about', '/kitchen-partner', '/contact', '/blog', '/menu', '/terms', '/privacy', '/faq', '/jaipur-tiffin'];
 
 const FOOTER_AREA_LINKS = SEO_PAGES.filter((p) => p.category === 'area' || p.category === 'near');
 const FOOTER_SERVICE_LINKS = SEO_PAGES.filter((p) => p.category === 'service').slice(0, 8);
@@ -19,7 +18,7 @@ const FOOTER_BUDGET_LINKS = SEO_PAGES.filter((p) => p.category === 'budget');
 export default function SiteFooter() {
   const { handleInstall, isInstalling, isPWAMode } = useInstallApp();
   const pathname = usePathname();
-  const { token } = useAuth();
+
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -28,8 +27,7 @@ export default function SiteFooter() {
   // Hide footer in PWA mode
   if (isPWAMode) return null;
   
-  // Hide footer in user portal (when logged in)
-  if (token) return null;
+
   
   // Only show footer on specific web pages
   const shouldShowFooter = FOOTER_ROUTES.some(route => 
@@ -88,7 +86,7 @@ export default function SiteFooter() {
               <span className="text-2xl lg:text-3xl font-black tracking-tighter text-white">TIFFICA</span>
             </Link>
             <p className="text-white/60 font-medium text-base lg:text-lg leading-relaxed mb-8 lg:mb-10 max-w-sm">
-              We're redefining the tiffin experience in Jaipur. No compromises on health, no shortcuts on taste. Pure home-cooked excellence.
+              We're redefining the tiffin experience in Beawar & Jaipur. No compromises on health, no shortcuts on taste. Pure home-cooked excellence.
             </p>
             <div className="flex gap-3 lg:gap-4">
               {[
@@ -183,33 +181,20 @@ export default function SiteFooter() {
               </div>
               <div className="group cursor-pointer">
                 <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-2">Customer Care</p>
-                <p className="text-base lg:text-xl font-black tracking-tight text-white group-hover:text-primary transition-colors uppercase">+91 82394 56238</p>
+                <p className="text-base lg:text-xl font-black tracking-tight text-white group-hover:text-primary transition-colors uppercase">+91 9983745802</p>
               </div>
               <div className="flex items-start lg:items-center gap-3 text-white/40">
                 <Globe size={16} className="flex-shrink-0 mt-0.5 lg:mt-0" />
-                <span className="text-xs font-black uppercase tracking-widest leading-relaxed">Jaipur — Vaishali Nagar, Malviya Nagar & more</span>
+                <span className="text-xs font-black uppercase tracking-widest leading-relaxed">Beawar & Jaipur</span>
               </div>
             </div>
           </div>
 
-          {/* Column 4: Newsletter or Badges */}
-          <div className="lg:col-span-3">
-            <h5 className="font-black text-xs uppercase tracking-[0.3em] mb-10 text-primary italic">Certifications</h5>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white/5 p-6 rounded-[24px] border border-white/10 text-center flex flex-col items-center justify-center group hover:bg-white/10 transition-colors">
-                <ShieldCheck className="text-primary mb-2" size={32} />
-                <p className="text-[10px] font-black uppercase tracking-widest">FSSAI Certified</p>
-              </div>
-              <div className="bg-white/5 p-6 rounded-[24px] border border-white/10 text-center flex flex-col items-center justify-center group hover:bg-white/10 transition-colors">
-                <div className="text-2xl mb-2">🌾</div>
-                <p className="text-[10px] font-black uppercase tracking-widest">100% Organic</p>
-              </div>
-            </div>
-          </div>
+         
         </div>
 
         {/* Massive Logo Background Text */}
-        <div className="relative mb-16 lg:mb-24 select-none opacity-[0.05]">
+        <div className="relative mb-16 lg:mb-24 select-none opacity-[0.3]">
           <h1 className="text-[20vw] sm:text-[25vw] font-black leading-none text-center tracking-tighter uppercase whitespace-nowrap overflow-hidden">
             {['T', 'I', 'F', 'F', 'I', 'C', 'A'].map((letter, index) => (
               <motion.span
@@ -220,7 +205,7 @@ export default function SiteFooter() {
                 transition={{
                   duration: 0.5,
                   delay: index * 0.1,
-                  ease: [0.22, 1, 0.36, 1]
+                  ease: [0.22, 1, 0.36, 1] as any
                 }}
                 className="inline-block"
               >

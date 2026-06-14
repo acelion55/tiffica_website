@@ -2,10 +2,9 @@
 
 import { ArrowRight } from 'lucide-react';
 import { useOrderAction } from '@/hooks/useOrderAction';
-import { AppDownloadModal } from './AppDownloadModal';
 
 export default function BlogCTA() {
-  const { isMobile, showModal, setShowModal, handleOrderClick, handleDownloadApp } = useOrderAction();
+  const { isMobile, handleOrderClick } = useOrderAction();
 
   return (
     <>
@@ -21,11 +20,7 @@ export default function BlogCTA() {
         </button>
       </div>
 
-      <AppDownloadModal 
-        isOpen={showModal} 
-        onClose={() => setShowModal(false)}
-        onDownload={handleDownloadApp}
-      />
+      {/* App download modal removed */}
     </>
   );
 }

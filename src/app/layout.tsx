@@ -1,13 +1,6 @@
 import type { Viewport } from "next";
 import "./globals.css";
 import { DEFAULT_SITE_METADATA, SITE_URL } from "@/lib/seo";
-import { AuthProvider } from "@/context/AuthContext";
-import { LocationProvider } from "@/context/LocationContext";
-import { CartProvider } from "@/context/CartContext";
-import { ToastProvider } from "@/context/ToastContext";
-import { NotificationProvider } from "@/context/NotificationContext";
-import { DeliveryAuthProvider } from "@/context/DeliveryAuthContext";
-import LocationModal from "@/components/location-modal";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import CouponPopup from "@/components/CouponPopup";
@@ -33,21 +26,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     '@context': 'https://schema.org',
     '@type': 'FoodEstablishment',
     name: 'Tiffica',
-    description: 'Best tiffin service in Jaipur offering fresh, home-cooked meals delivered daily',
+    description: 'Best tiffin service in Beawar & Jaipur offering fresh, home-cooked meals delivered daily',
     url: SITE_URL,
-    telephone: '+91-XXXXXXXXXX',
+    telephone: '+91 9983745802',
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Jaipur',
+      addressLocality: 'Beawar',
       addressRegion: 'Rajasthan',
       addressCountry: 'IN',
     },
     servesCuisine: 'Indian',
     priceRange: '₹₹',
-    areaServed: {
-      '@type': 'City',
-      name: 'Jaipur',
-    },
+    areaServed: [
+      { '@type': 'City', name: 'Beawar' },
+      { '@type': 'City', name: 'Jaipur' },
+    ],
   };
 
   return (
@@ -62,25 +55,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="font-sans">
-        <ToastProvider>
-          <AuthProvider>
-            <DeliveryAuthProvider>
-            <NotificationProvider>
-                <CartProvider>
-                  <LocationProvider>
+       
                     <SiteHeader />
                     <main className="min-h-screen">
                       {children}
                     </main>
                     <SiteFooter />
-                    <LocationModal />
-                    <CouponPopup />
-                  </LocationProvider>
-                </CartProvider>
-            </NotificationProvider>
-            </DeliveryAuthProvider>
-          </AuthProvider>
-        </ToastProvider>
+                    
       </body>
     </html>
   );

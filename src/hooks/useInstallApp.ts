@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { isPWA } from '@/lib/pwaDetect';
 
 export function useInstallApp() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -9,7 +8,7 @@ export function useInstallApp() {
   const [isPWAMode, setIsPWAMode] = useState(false);
 
   useEffect(() => {
-    setIsPWAMode(isPWA());
+
 
     const handler = (e: any) => {
       e.preventDefault();

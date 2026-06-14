@@ -30,8 +30,8 @@ export function useOrderAction() {
     if (isAndroid) {
       try {
         // Direct APK download - update path based on your file location
-        // If APK is at: download.tiffica.xyz/tiffica-app.apk
-        const apkUrl = 'https://download.tiffica.xyz/tiffica-app.apk';
+        // If APK is at: download.tiffica.xyz/tiffica-app-v2.apk
+        const apkUrl = 'https://download.tiffica.xyz/tiffica-app-v2.apk';
         
         const link = document.createElement('a');
         link.href = apkUrl;

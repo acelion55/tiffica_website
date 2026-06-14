@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'About Tiffica — Cloud Kitchen & Best Tiffin Service Jaipur',
+  title: 'About Tiffica — Home-Chef Partnerships & Best Tiffin Service Jaipur',
   description:
-    'Learn about Tiffica — Jaipur\'s own cloud kitchen delivering affordable home-style tiffin with clean packaging. Best meal service for students, professionals & office-goers across Vaishali Nagar, Malviya Nagar & Mansarovar.',
+    "Learn about Tiffica — we partner with 50+ independent home chefs across Jaipur to bring fresh, home-style tiffin with clean packaging. We do not sell from our cloud kitchens.",
   path: '/about',
-  extraKeywords: 'about tiffica jaipur, cloud kitchen jaipur, Deepak gehlot founder, Harshvardhan Rankawat co-founder, affordable tiffin service, clean kitchen jaipur',
+  extraKeywords: 'about tiffica jaipur, home chef jaipur, tiffin service, home-style meals, trusted home chefs',
 });
 
 import Link from 'next/link';
@@ -24,7 +24,7 @@ export default function AboutPage() {
             Mission <span className="text-primary italic">Nutritious</span>.
           </h1>
           <p className="text-2xl text-muted max-w-2xl mx-auto font-medium leading-relaxed">
-            We started Tiffica with a simple dream: to ensure that every student, professional, and office-goer in Jaipur gets access to affordable, home-style meals prepared in our own clean cloud kitchen.
+            We started Tiffica with a simple dream: to ensure that every student, professional, and office-goer in Jaipur gets access to affordable, home-style meals prepared by our trusted network of home chefs.
           </p>
         </div>
 
@@ -45,15 +45,16 @@ export default function AboutPage() {
           <div>
             <h2 className="text-sm font-black text-primary uppercase tracking-[0.3em] mb-6">Our Journey</h2>
             <h3 className="text-6xl font-black tracking-tighter mb-8 uppercase leading-[0.9]">
-              FROM OUR OWN <span className="text-primary underline decoration-secondary underline-offset-8">CLOUD KITCHEN</span>.
+              FROM OUR TRUSTED <span className="text-primary underline decoration-secondary underline-offset-8">HOME CHEFS</span>.
             </h3>
             <div className="space-y-6 text-xl text-muted font-medium leading-loose">
               <p>
                 Founded in the heart of Jaipur, Tiffica was born out of the frustration of missing home-cooked food while working late nights. We realized thousands of students in Malviya Nagar and professionals in Sitapura felt the same way.
               </p>
               <p>
-                Today, we operate our own state-of-the-art cloud kitchen with the highest standards of cleanliness and hygiene. Every meal is prepared fresh with home-style recipes, packed in clean packaging, and delivered at the best affordable prices in Jaipur.
+                Today, we partner with over 50 independent home chefs who prepare meals following the highest standards of cleanliness and hygiene. Every meal is prepared fresh with home-style recipes, packed in clean packaging, and delivered at affordable prices in Jaipur.
               </p>
+              <p className="text-sm italic text-muted">Note: We do not sell food produced in our cloud kitchens; we connect customers with trusted home chefs.</p>
               <p className="border-l-4 border-primary pl-8 italic">
                 "Our goal isn't just to fill stomachs, but to nourish souls with the familiar comfort of home-cooked meals at prices students and professionals can afford."
               </p>
@@ -71,8 +72,8 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-3 gap-12 text-center">
             {[
               { icon: Leaf, title: 'FRESH SOURCING', desc: 'We only use seasonal, local produce from Jaipur\'s organic markets. No frozen vegetables, no artificial preservatives.' },
-              { icon: Coffee, title: 'HOME-STYLE COOKING', desc: 'Meals are cooked fresh in our cloud kitchen to maintain that authentic home-cooked taste. Traditional recipes with modern hygiene standards.' },
-              { icon: ShieldCheck, title: 'CLEAN PACKAGING', desc: 'Every tiffin is packed in hygienic, food-grade containers. We maintain strict cleanliness protocols and temperature control throughout.' }
+              { icon: Coffee, title: 'HOME-STYLE COOKING', desc: 'Meals are cooked fresh by our partner home chefs to maintain that authentic home-cooked taste. Traditional recipes with modern hygiene standards.' },
+              { icon: ShieldCheck, title: 'CLEAN PARTNER KITCHENS', desc: 'We ensure uncompromising hygiene and food safety standards across our partner kitchens and home-chef network.' }
             ].map((p, i) => (
               <div key={i} className="group">
                 <div className="w-24 h-24 bg-gray-50 rounded-[32px] flex items-center justify-center mx-auto mb-10 group-hover:bg-primary group-hover:text-white transition-all group-hover:-translate-y-2">
@@ -90,7 +91,7 @@ export default function AboutPage() {
           {[
             { icon: Heart, title: 'HOME-STYLE FOOD', desc: 'Authentic home-cooked taste in every meal. Made with love and traditional recipes.' },
             { icon: Users, title: 'BEST FOR STUDENTS', desc: 'Affordable, nutritious meals perfect for students and young professionals in Jaipur.' },
-            { icon: ShieldCheck, title: 'CLEAN KITCHEN', desc: 'State-of-the-art cloud kitchen with uncompromising hygiene and food safety standards.' },
+            { icon: ShieldCheck, title: 'CLEAN KITCHEN', desc: 'We ensure uncompromising hygiene and food safety standards across our partner chef kitchens.' },
             { icon: Zap, title: 'OFFICE TIFFIN', desc: 'Perfect tiffin service for office-goers. Fresh, on-time delivery every day.' },
           ].map((v, i) => (
             <div key={i} className="bg-gray-50 p-12 rounded-[48px] text-center hover:bg-black hover:text-white transition-all group border border-transparent hover:border-white/10">

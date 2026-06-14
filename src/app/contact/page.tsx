@@ -4,9 +4,9 @@ import ContactLeadsForm from './ContactLeadsForm';
 import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildPageMetadata({
-  title: 'Contact Tiffica — Tiffin Service Jaipur | Support & Orders',
+  title: 'Contact Tiffica — Tiffin Service Beawar & Jaipur | Support & Orders',
   description:
-    'Contact Tiffica for tiffin service in Jaipur — Vaishali Nagar, Malviya Nagar, Jagatpura, Mahesh Nagar, Mansarovar. Subscriptions, corporate lunch, student plans & support.',
+    'Contact Tiffica for tiffin service in Beawar & Jaipur. Subscriptions, corporate lunch, student plans & support.',
   path: '/contact',
   extraKeywords: 'contact tiffica jaipur, tiffin service number jaipur, order tiffin jaipur',
 });
@@ -53,7 +53,7 @@ export default function ContactPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[10px] font-black uppercase tracking-widest text-muted mb-2">Call Us</p>
-                    <p className="text-xl sm:text-3xl font-black tracking-tight uppercase">+91 98765 43210</p>
+                    <p className="text-xl sm:text-3xl font-black tracking-tight uppercase">+91 9983745802</p>
                     <p className="text-xs sm:text-sm text-muted font-medium mt-1">Mon - Sat, 9am to 9pm IST</p>
                   </div>
                 </div>
@@ -64,8 +64,8 @@ export default function ContactPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[10px] font-black uppercase tracking-widest text-muted mb-2">Our Base</p>
-                    <p className="text-xl sm:text-3xl font-black tracking-tight uppercase">JAIPUR, AJMER & BEAWAR</p>
-                    <p className="text-xs sm:text-sm text-muted font-medium mt-1">Serving across Rajasthan with love</p>
+                    <p className="text-xl sm:text-3xl font-black tracking-tight uppercase">BEAWAR & JAIPUR</p>
+                    <p className="text-xs sm:text-sm text-muted font-medium mt-1">Serving Beawar & Jaipur with love</p>
                   </div>
                 </div>
               </div>

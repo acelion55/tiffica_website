@@ -3,10 +3,9 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useOrderAction } from '@/hooks/useOrderAction';
-import { AppDownloadModal } from './AppDownloadModal';
 
 export default function AboutCTA() {
-  const { isMobile, showModal, setShowModal, handleOrderClick, handleDownloadApp } = useOrderAction();
+  const { isMobile, handleOrderClick } = useOrderAction();
 
   return (
     <>
@@ -30,11 +29,7 @@ export default function AboutCTA() {
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-secondary/20 rounded-pill translate-x-1/2 translate-y-1/2 blur-[100px]" />
       </div>
 
-      <AppDownloadModal 
-        isOpen={showModal} 
-        onClose={() => setShowModal(false)}
-        onDownload={handleDownloadApp}
-      />
+      {/* App download modal removed */}
     </>
   );
 }

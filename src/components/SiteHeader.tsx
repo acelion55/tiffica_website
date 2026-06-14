@@ -4,14 +4,15 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+
 import { useAuth } from '@/context/AuthContext';
-import { isPWA } from '@/lib/pwaDetect';
 
 const NAV_LINKS = [
   { name: 'Home', href: '/' },
   { name: 'Blog', href: '/blog' },
   { name: 'Menu', href: '/menu' },
   { name: 'About', href: '/about' },
+  { name: 'Kitchen Partner', href: '/kitchen-partner' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -22,11 +23,11 @@ const HIDE_HEADER_ROUTES = ['/login', '/signup', '/forgot-password', '/onboardin
 const PWA_ONLY_ROUTES = ['/home', '/menu', '/subscriptions', '/schedule', '/reorder', '/profile', '/plan', '/subscribe', '/addresses', '/search', '/checkout', '/notifications'];
 
 export default function SiteHeader() {
+  const { token } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isPWAMode, setIsPWAMode] = useState(false);
   const pathname = usePathname();
-  const { token } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -34,9 +35,7 @@ export default function SiteHeader() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    setIsPWAMode(isPWA());
-  }, []);
+
 
   // Close mobile menu on route change
   useEffect(() => setIsOpen(false), [pathname]);
@@ -82,23 +81,7 @@ export default function SiteHeader() {
             ))}
           </nav>
 
-          {/* CTA / Login */}
-          <div className="hidden md:flex items-center gap-4">
-            {!token ? (
-              <>
-                <Link href="https://app.tiffica.xyz/login" className="text-sm font-bold hover:text-primary transition-colors px-4 py-2">
-                  LOGIN
-                </Link>
-                <Link href="https://app.tiffica.xyz/signup" className="bg-primary text-white px-6 py-2.5 rounded-pill font-bold text-sm shadow-xl hover:shadow-primary/20 hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                  GET STARTED <ArrowRight size={16} />
-                </Link>
-              </>
-            ) : (
-              <Link href="https://app.tiffica.xyz/home" className="bg-primary text-white px-6 py-2.5 rounded-pill font-bold text-sm shadow-xl hover:shadow-primary/20 hover:-translate-y-0.5 transition-all">
-                DASHBOARD
-              </Link>
-            )}
-          </div>
+        <div></div>
 
           {/* Mobile Toggle */}
           <button 

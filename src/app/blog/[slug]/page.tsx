@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, Calendar, User, Share2, Tag } from 'lucide-react
 import { notFound } from 'next/navigation';
 import BlogCTA from '@/components/BlogCTA';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
 
 interface Blog {
   title: string;

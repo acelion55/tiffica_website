@@ -2,45 +2,26 @@
 
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { useAuth } from '@/context/AuthContext';
-import { isPWA } from '@/lib/pwaDetect';
+
 import Link from 'next/link';
 import { ArrowRight, CheckCircle, Clock, Shield, Star, MapPin, Play, Utensils, Award, Smile, Coffee, Download, Loader2 } from 'lucide-react';
 import { useInstallApp } from '@/hooks/useInstallApp';
 import { useOrderAction } from '@/hooks/useOrderAction';
-import { AppDownloadModal } from '@/components/AppDownloadModal';
-import { AppDownloadsSection } from '@/components/AppDownloadsSection';
+// App download section removed
 import { motion } from 'framer-motion';
 
 export default function LandingPage() {
-  const { token, loading, user } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const { handleInstall, isInstalling, isPWAMode } = useInstallApp();
-  const { isMobile, showModal, setShowModal, handleOrderClick, handleDownloadApp } = useOrderAction();
+  const { isMobile, handleOrderClick } = useOrderAction();
 
   // Only redirect to dashboard if in PWA mode.
   // Browser users should stay on the landing page to browse marketing content.
-  useEffect(() => {
-    const isPWAMode = isPWA();
-    if (!loading && token && isPWAMode) {
-      if (user?.role === 'admin' || user?.role === 'kitchen-owner') {
-        router.push('/admin');
-      } else {
-        router.push('/home');
-      }
-    }
-  }, [loading, token, user, router]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="w-16 h-16 border-[6px] border-primary border-t-secondary rounded-pill animate-spin shadow-2xl" />
-      </div>
-    );
-  }
 
-  if (token) return null;
+
+
 
   // Show marketing content for all users (browser and PWA)
   return (
@@ -89,23 +70,14 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <button 
-              onClick={handleOrderClick}
-              disabled={isInstalling || isMobile === null}
-              className="group bg-primary text-white px-10 py-5 rounded-pill font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 hover:bg-black transition-all flex items-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
+            <a 
+              href="https://download.tiffica.xyz/tiffica-app-v2.apk"
+              download
+              className="group bg-primary text-white px-10 py-5 rounded-pill font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 hover:bg-black transition-all flex items-center gap-3"
             >
-              {isInstalling ? (
-                <>
-                  <Loader2 className="animate-spin" size={24} />
-                  INSTALLING APP...
-                </>
-              ) : (
-                <>
-                  <Download size={24} />
-                  ORDER YOUR TIFFIN
-                </>
-              )}
-            </button>
+              <Download size={24} />
+              DOWNLOAD APP
+            </a>
             <Link href="/menu" className="flex items-center gap-3 text-lg font-black hover:text-primary transition-colors">
               <div className="w-14 h-14 rounded-pill border-2 border-gray-200 flex items-center justify-center transition-colors">
                 <Play className="fill-current" size={20} />
@@ -209,11 +181,11 @@ export default function LandingPage() {
               className="flex-1"
             >
               <h2 className="text-6xl font-black tracking-tighter mb-8 uppercase leading-[0.9]">
-                OUR OWN <span className="text-primary underline decoration-secondary underline-offset-8">CLOUD KITCHEN</span>. REAL TASTE.
+                WE PARTNER WITH <span className="text-primary underline decoration-secondary underline-offset-8">50+ HOME CHEFS</span>. REAL TASTE.
               </h2>
               <p className="text-sm font-black text-primary uppercase tracking-[0.3em] mb-6">Quality Guaranteed</p>
               <p className="text-xl text-muted font-medium leading-loose mb-10">
-                At Tiffica, we operate our own state-of-the-art cloud kitchen in Jaipur. We understand that food is not just nutrition—it's an emotion. Every meal is prepared fresh with home-style recipes, maintaining the highest standards of cleanliness and hygiene.
+                At Tiffica, we partner with over 50 independent home chefs across Jaipur. We are not selling from our cloud kitchens — we connect you with trusted home chefs who prepare fresh, home-style meals following strict hygiene standards.
               </p>
               <div className="grid grid-cols-2 gap-8 mb-12">
                 <motion.div
@@ -387,9 +359,14 @@ export default function LandingPage() {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-6 justify-center items-center relative z-10"
             >
-              <button onClick={handleOrderClick} className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-full font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 transition-all text-center disabled:opacity-70" disabled={isMobile === null}>
-                GET STARTED NOW
-              </button>
+              <a 
+                href="https://download.tiffica.xyz/tiffica-app-v2.apk"
+                download
+                className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-full font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 transition-all text-center flex items-center justify-center gap-3"
+              >
+                <Download size={24} />
+                DOWNLOAD APP
+              </a>
               <Link href="https://app.tiffica.xyz/login" className="w-full sm:w-auto backdrop-blur-md bg-black text-white border border-white/20 px-10 py-5 rounded-full font-black text-xl hover:bg-white hover:text-black transition-all text-center">
                 MEMBER LOGIN
               </Link>
@@ -398,15 +375,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* App Downloads Section */}
-      <AppDownloadsSection />
-
-      {/* App Download Modal */}
-      <AppDownloadModal 
-        isOpen={showModal} 
-        onClose={() => setShowModal(false)}
-        onDownload={handleDownloadApp}
-      />
+      {/* App downloads removed per request */}
     </div>
   );
 }

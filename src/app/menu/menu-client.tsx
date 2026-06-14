@@ -27,7 +27,8 @@ export default function MenuClient() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { token } = useAuth();
-  const { locationSet } = useLocation();
+  const { location } = useLocation();
+  const isLocationSet = !!location;
 
   const date = searchParams.get('date') ?? '';
   const mealType = searchParams.get('mealType') ?? '';
@@ -47,7 +48,7 @@ export default function MenuClient() {
       try {
         setLoading(true);
         // Use location-based endpoint if location is set
-        const url = locationSet
+        const url = isLocationSet
           ? `${API_URL}/menu/by-location`
           : `${API_URL}/menu/mealtype/${mealType}`;
         const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
@@ -56,7 +57,7 @@ export default function MenuClient() {
           const all = data.items || [];
           // Filter by mealType client-side when using by-location
           // Check both mealType (old) and mealTypes (new array)
-          setMenuItems(locationSet ? all.filter((i: MenuItem) => 
+          setMenuItems(isLocationSet ? all.filter((i: MenuItem) => 
             i.mealType === mealType || (i.mealTypes && i.mealTypes.includes(mealType))
           ) : all);
         }
@@ -64,7 +65,7 @@ export default function MenuClient() {
       finally { setLoading(false); }
     };
     fetchMenuItems();
-  }, [mealType, token, locationSet]);
+  }, [mealType, token, isLocationSet]);
 
   const handleAddToCart = (item: MenuItem) => {
     setCart(prevCart => {
