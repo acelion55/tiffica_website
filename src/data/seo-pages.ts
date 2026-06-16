@@ -68,7 +68,7 @@ export const SEO_PAGES: SeoPage[] = [
     h1: 'Tiffin Service Near Jagatpura, Jaipur',
     subtitle: 'Any tiffin service near Jagatpura — order in minutes',
     intro: 'Searching for any tiffin service near Jagatpura? Tiffica delivers hot homemade meals to Jagatpura, RIICO, and surrounding areas with same-day ordering and flexible subscriptions.',
-    bullets: ['Near Jagatpura quick delivery', 'Order via app or web', 'Live menu updated daily', 'Cashless Razorpay payment'],
+    bullets: ['Near Jagatpura quick delivery', 'Order via app or web', 'Live menu updated daily', 'Cashless online payment'],
     primaryKeyword: 'any tiffin service near jagatpura',
     area: 'Jagatpura',
     category: 'near',
