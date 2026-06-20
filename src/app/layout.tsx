@@ -46,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/logo.jpeg" type="image/jpeg" />
         <link rel="apple-touch-icon" href="/logo.jpeg" />
         {/* Google Analytics */}

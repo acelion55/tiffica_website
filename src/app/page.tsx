@@ -35,7 +35,7 @@ export default function LandingPage() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -44,18 +44,18 @@ export default function LandingPage() {
             <span className="bg-primary text-white text-[10px] font-black px-2 py-0.5 rounded-pill">NEW</span>
             <span className="text-xs font-bold text-muted uppercase tracking-widest">Premium Tiffin Experience in Jaipur</span>
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-mega uppercase tracking-tighter mb-8"
           >
-            Taste of <span className="text-primary italic">Home</span>,<br /> 
+            Taste of <span className="text-primary italic">Home</span>,<br />
             Delivered <span className="text-secondary">Fresh</span>.
           </motion.h1>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -64,20 +64,24 @@ export default function LandingPage() {
             Order the best affordable tiffin in Jaipur — Vaishali Nagar, Malviya Nagar, Jagatpura, Mahesh Nagar & Mansarovar. Healthy home-cooked meals for students and professionals.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <a 
-              href="https://download.tiffica.xyz/tiffica-app-v2.apk"
-              download
-              className="group bg-primary text-white px-10 py-5 rounded-pill font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 hover:bg-black transition-all flex items-center gap-3"
-            >
-              <Download size={24} />
-              DOWNLOAD APP
-            </a>
+            <div className="flex flex-col items-center gap-3">
+              <a
+                href="https://tiffica.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-primary text-white px-10 py-5 rounded-pill font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 hover:bg-black transition-all flex items-center gap-3"
+              >
+                <Download size={24} />
+                INSTALL PWA APP
+              </a>
+
+            </div>
             <Link href="/menu" className="flex items-center gap-3 text-lg font-black hover:text-primary transition-colors">
               <div className="w-14 h-14 rounded-pill border-2 border-gray-200 flex items-center justify-center transition-colors">
                 <Play className="fill-current" size={20} />
@@ -97,7 +101,7 @@ export default function LandingPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="absolute top-40 right-20 hidden lg:block animate-bounce duration-[4000ms]">
           <div className="bg-white p-4 rounded-3xl shadow-2xl border border-gray-100 flex items-center gap-4">
             <div className="w-12 h-12 bg-yellow-100 rounded-2xl flex items-center justify-center text-2xl">🚚</div>
@@ -109,12 +113,12 @@ export default function LandingPage() {
         </div>
       </section>
 
-    
+
 
       {/* How It Works Section */}
       <section className="py-32 bg-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -128,15 +132,15 @@ export default function LandingPage() {
           <div className="grid lg:grid-cols-4 gap-8 relative">
             {/* Connector Line (Desktop) */}
             <div className="hidden lg:block absolute top-[40%] left-[10%] right-[10%] h-[2px] bg-dashed border-t-2 border-dashed border-primary/20" />
-            
+
             {[
               { step: '01', title: 'Pick a Plan', desc: 'Choose from Daily, Weekly, or Monthly subscriptions that suit your lifestyle.', icon: Coffee },
               { step: '02', title: 'Select Menu', desc: 'Customize your food preferences. We offer North Indian, Rajasthani, and Diet-specific meals.', icon: Utensils },
               { step: '03', title: 'We Cook', desc: 'Our expert home-chefs prepare your meal with fresh ingredients and maximum hygiene.', icon: Award },
               { step: '04', title: 'Doorstep Delivery', desc: 'Enjoy your hot, delicious, homemade meal delivered across Jaipur — Vaishali Nagar, Malviya Nagar, Jagatpura & more.', icon: Smile },
             ].map((item, i) => (
-              <motion.div 
-                key={i} 
+              <motion.div
+                key={i}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -159,7 +163,7 @@ export default function LandingPage() {
       <section className="py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-20">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -167,13 +171,13 @@ export default function LandingPage() {
               className="flex-1 relative"
             >
               <div className="absolute -inset-4 bg-orange-yellow rounded-[64px] rotate-3 -z-10" />
-              <img 
-                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1000&auto=format&fit=crop" 
-                alt="Chef at Work" 
+              <img
+                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1000&auto=format&fit=crop"
+                alt="Chef at Work"
                 className="rounded-[60px] shadow-2xl w-full aspect-[4/3] object-cover"
               />
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -219,7 +223,7 @@ export default function LandingPage() {
       <section className="py-32 bg-black text-white rounded-[80px] mx-4 overflow-hidden relative">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -232,27 +236,27 @@ export default function LandingPage() {
 
           <div className="grid lg:grid-cols-3 gap-8">
             {[
-              { 
-                name: 'Rahul Sharma', 
-                role: 'IT Professional', 
+              {
+                name: 'Rahul Sharma',
+                role: 'IT Professional',
                 text: 'Moving to Jaipur for work was hard, but Tiffica made me feel at home. The Dal Baati on weekends is literal heaven!',
                 avatar: 'https://i.pravatar.cc/150?u=1'
               },
-              { 
-                name: 'Aditi Verma', 
-                role: 'Medical Student', 
+              {
+                name: 'Aditi Verma',
+                role: 'Medical Student',
                 text: 'I was tired of eating oily outside food. Tiffica’s diet plans are perfect for my busy hospital shifts.',
                 avatar: 'https://i.pravatar.cc/150?u=2'
               },
-              { 
-                name: 'Priya Gupta', 
-                role: 'Work-from-home Mom', 
+              {
+                name: 'Priya Gupta',
+                role: 'Work-from-home Mom',
                 text: 'Managing kids and work left no time for cooking. Tiffica is a lifesaver for our whole family.',
                 avatar: 'https://i.pravatar.cc/150?u=3'
               },
             ].map((t, i) => (
-              <motion.div 
-                key={i} 
+              <motion.div
+                key={i}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -279,7 +283,7 @@ export default function LandingPage() {
       {/* FAQ Simple Section */}
       <section className="py-32">
         <div className="max-w-4xl mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -296,8 +300,8 @@ export default function LandingPage() {
               { q: 'Where do you deliver?', a: 'We deliver across Jaipur including Vaishali Nagar, Malviya Nagar, Jagatpura, Mahesh Nagar, Mansarovar, and nearby localities.' },
               { q: 'Is the packaging eco-friendly?', a: 'We use high-quality, recyclable materials to ensure we minimize our environmental footprint.' },
             ].map((f, i) => (
-              <motion.div 
-                key={i} 
+              <motion.div
+                key={i}
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -322,7 +326,7 @@ export default function LandingPage() {
       {/* Premium CTA Section */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -332,8 +336,8 @@ export default function LandingPage() {
             {/* Background patterns */}
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#f97316_1px,transparent_1px)] [background-size:20px_20px]" />
             <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[80%] bg-primary/20 blur-[100px] rounded-full" />
-            
-            <motion.h2 
+
+            <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -342,7 +346,7 @@ export default function LandingPage() {
             >
               READY TO TASTE <br /> <span className="text-primary italic"> AUTHENTICITY</span>?
             </motion.h2>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -351,22 +355,32 @@ export default function LandingPage() {
             >
               Join thousands of happy customers in Jaipur. Experience the joy of healthy, homemade meals delivered right to your doorstep.
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-6 justify-center items-center relative z-10"
             >
-              <a 
-                href="https://download.tiffica.xyz/tiffica-app-v2.apk"
-                download
-                className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-full font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 transition-all text-center flex items-center justify-center gap-3"
-              >
-                <Download size={24} />
-                DOWNLOAD APP
-              </a>
+              <div className="flex flex-col items-center gap-4 w-full sm:w-auto mt-4">
+                <a
+                  href="https://tiffica.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-full font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 transition-all text-center flex items-center justify-center gap-3"
+                >
+                  <Download size={24} />
+                  INSTALL PWA APP
+                </a>
+                <a
+                  href="https://download.tiffica.xyz/tiffica-app-v2.apk"
+                  className="text-xs text-slate-400 font-bold uppercase tracking-widest hover:text-primary transition-colors"
+                  download
+                >
+                  Download APK Directly
+                </a>
+              </div>
               <Link href="https://app.tiffica.xyz/login" className="w-full sm:w-auto backdrop-blur-md bg-black text-white border border-white/20 px-10 py-5 rounded-full font-black text-xl hover:bg-white hover:text-black transition-all text-center">
                 MEMBER LOGIN
               </Link>
