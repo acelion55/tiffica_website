@@ -17,6 +17,7 @@ export async function POST(req: Request) {
       bulkOrder: body.bulk || false,
       menuDescription: body.description || '',
       mealType: body.dailyTiffin ? 'Both' : 'Lunch', // If daily tiffin checked, set as Both
+      password: body.password,
     };
     
     // Forward to backend API

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
 import Link from 'next/link';
@@ -15,6 +15,17 @@ export default function LandingPage() {
   const pathname = usePathname();
   const { handleInstall, isInstalling, isPWAMode } = useInstallApp();
   const { isMobile, handleOrderClick } = useOrderAction();
+
+  // Detect narrow/mobile viewport to change animation direction
+  const [isNarrow, setIsNarrow] = useState(false);
+  useEffect(() => {
+    function check() {
+      setIsNarrow(typeof window !== 'undefined' && window.innerWidth < 768);
+    }
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   // Only redirect to dashboard if in PWA mode.
   // Browser users should stay on the landing page to browse marketing content.
@@ -34,26 +45,21 @@ export default function LandingPage() {
           <div className="absolute top-[40%] -right-[10%] w-[50%] h-[70%] bg-secondary/30 blur-[150px] rounded-pill animate-pulse duration-700" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-gray-100 rounded-pill px-4 py-2 mb-8"
-          >
-            <span className="bg-primary text-white text-[10px] font-black px-2 py-0.5 rounded-pill">NEW</span>
-            <span className="text-xs font-bold text-muted uppercase tracking-widest">Premium Tiffin Experience in Jaipur</span>
-          </motion.div>
+        <div className="relative  mx-auto px-4 sm:px-6 lg:px-8 text-center z-50">
+       
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-mega uppercase tracking-tighter mb-8"
+            className=" uppercase tracking-tighter mb-[25vh] relative z-50 lg:mt-6 "
           >
-            Taste of <span className="text-primary italic">Home</span>,<br />
+            <span className="text-5xl lg:text-6xl md:text-7xl lg:text-mega font-extrabold whitespace-nowrap">
+              Taste of <span className="text-primary italic">Home</span>,
+            </span>
+            <br /><span className='text-3xl lg:text-6xl md:text-7xl lg:text-mega  font-extrabold'>
             Delivered <span className="text-secondary">Fresh</span>.
-          </motion.h1>
+          </span></motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -61,35 +67,63 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl sm:text-2xl text-muted max-w-2xl mx-auto mb-12 font-medium"
           >
-            Order the best affordable tiffin in Jaipur — Vaishali Nagar, Malviya Nagar, Jagatpura, Mahesh Nagar & Mansarovar. Healthy home-cooked meals for students and professionals.
+            Order the best affordable tiffin in Jaipur 
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            className="absolute left-4 top-1/2 -translate-y-1/2 flex flex-col items-start gap-3 z-50 sm:static sm:left-auto sm:top-auto sm:translate-y-0 sm:flex-row sm:items-center sm:justify-center sm:gap-6"
           >
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-start gap-3 sm:items-center">
               <a
                 href="https://tiffica.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group bg-primary text-white px-10 py-5 rounded-pill font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 hover:bg-black transition-all flex items-center gap-3"
+                className="group bg-primary text-white px-6 py-3 sm:px-10 sm:py-5 rounded-pill font-black text-base sm:text-xl shadow-2xl shadow-primary/40 hover:scale-105 hover:bg-black transition-all flex items-center gap-3"
               >
                 <Download size={24} />
-                INSTALL PWA APP
+                INSTALL APP
               </a>
 
             </div>
-            <Link href="/menu" className="flex items-center gap-3 text-lg font-black hover:text-primary transition-colors">
-              <div className="w-14 h-14 rounded-pill border-2 border-gray-200 flex items-center justify-center transition-colors">
-                <Play className="fill-current" size={20} />
+            <Link href="/menu" className="flex items-center gap-3 text-base font-black hover:text-primary transition-colors bg-white px-6 py-3 rounded-pill border border-gray-200 shadow-sm sm:bg-transparent sm:px-0 sm:py-0 sm:border-0">
+              <div className="w-10 h-10 rounded-pill border-2 border-gray-200 flex items-center justify-center transition-colors sm:w-14 sm:h-14">
+                <Play className="fill-current" size={18} />
               </div>
               VIEW MENU
             </Link>
           </motion.div>
         </div>
+        {/* Hero Thali Images: slide in on page load */}
+        <motion.img
+          src="/thali01.png"
+          alt="Thali"
+          initial={isNarrow ? { opacity: 0.6, x: 0, y: 140, rotate: 0 } : { opacity: 0.6, x: 180, y: 180, rotate: -90 }}
+          animate={isNarrow ? { opacity: 1, x: 60, y: -300, rotate: 0 } : { opacity: 1, x: 0, y: 0, rotate: 0 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: 'circOut' }}
+          className="absolute bottom-6 right-6 w-[30vh] sm:w-36 md:w-48 lg:w-[55vh] rounded-2xl block z-10 pointer-events-none"
+        />
+
+        <motion.img
+          src="/thali02.png"
+          alt="Thali"
+          initial={isNarrow ? { opacity: 0.6, x: -190, y: -140, rotate: 0 } : { opacity: 0.6, x: -180, y: -180, rotate: -90 }}
+          animate={isNarrow ? { opacity: 1, x: -40, y: 40, rotate: 0 } : { opacity: 1, x: 0, y: 0, rotate: 0 }}
+          transition={{ duration: 0.9, delay: 0.5, ease: 'circOut' }}
+          className="absolute top-6 left-6 w-[25vh] sm:w-36 md:w-44 lg:w-[45vh] rounded-2xl block z-10 pointer-events-none"
+        />
+
+        {/* Mobile-only lady hero image (top-right beside thali) */}
+        <motion.img
+          src="/heroledy.webp"
+          alt="Hero Lady"
+          initial={isNarrow ? { opacity: 0, x: 60, y: -20 } : { opacity: 0 }}
+          animate={isNarrow ? { opacity: 1, x: 0, y: 40 } : { opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="absolute top-6 right-0 block md:hidden w-[23vh]  object-cover z-20 pointer-events-none "
+        />
 
         {/* Decorative Floating Elements */}
         <div className="absolute bottom-20 left-10 hidden lg:block animate-bounce duration-[3000ms]">
@@ -102,7 +136,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="absolute top-40 right-20 hidden lg:block animate-bounce duration-[4000ms]">
+        <div className="absolute top-20 right-20 hidden lg:block animate-bounce duration-[4000ms]">
           <div className="bg-white p-4 rounded-3xl shadow-2xl border border-gray-100 flex items-center gap-4">
             <div className="w-12 h-12 bg-yellow-100 rounded-2xl flex items-center justify-center text-2xl">🚚</div>
             <div>
@@ -134,9 +168,9 @@ export default function LandingPage() {
             <div className="hidden lg:block absolute top-[40%] left-[10%] right-[10%] h-[2px] bg-dashed border-t-2 border-dashed border-primary/20" />
 
             {[
-              { step: '01', title: 'Pick a Plan', desc: 'Choose from Daily, Weekly, or Monthly subscriptions that suit your lifestyle.', icon: Coffee },
-              { step: '02', title: 'Select Menu', desc: 'Customize your food preferences. We offer North Indian, Rajasthani, and Diet-specific meals.', icon: Utensils },
-              { step: '03', title: 'We Cook', desc: 'Our expert home-chefs prepare your meal with fresh ingredients and maximum hygiene.', icon: Award },
+              { step: '01', title: 'Download Tiffica App', desc: 'Download Tiffica app from directly our website. An app that deliver the taste of home-cooked meals.', icon: Coffee },
+              { step: '02', title: 'Create Your Account', desc: 'Create your profile with the help of your mobile number. Set your email and cuisine preferences and you are good to go.', icon: Utensils },
+              { step: '03', title: 'Order Homemade Food', desc: 'You can choose homemade food from a variety of cuisine. You can place daily as well as advance order.', icon: Award },
               { step: '04', title: 'Doorstep Delivery', desc: 'Enjoy your hot, delicious, homemade meal delivered across Jaipur — Vaishali Nagar, Malviya Nagar, Jagatpura & more.', icon: Smile },
             ].map((item, i) => (
               <motion.div
@@ -371,25 +405,16 @@ export default function LandingPage() {
                   className="w-full sm:w-auto bg-primary text-white px-10 py-5 rounded-full font-black text-xl shadow-2xl shadow-primary/40 hover:scale-105 transition-all text-center flex items-center justify-center gap-3"
                 >
                   <Download size={24} />
-                  INSTALL PWA APP
+                  INSTALL app
                 </a>
-                <a
-                  href="https://download.tiffica.xyz/tiffica-app-v2.apk"
-                  className="text-xs text-slate-400 font-bold uppercase tracking-widest hover:text-primary transition-colors"
-                  download
-                >
-                  Download APK Directly
-                </a>
+           
               </div>
-              <Link href="https://app.tiffica.xyz/login" className="w-full sm:w-auto backdrop-blur-md bg-black text-white border border-white/20 px-10 py-5 rounded-full font-black text-xl hover:bg-white hover:text-black transition-all text-center">
-                MEMBER LOGIN
-              </Link>
+            
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* App downloads removed per request */}
     </div>
   );
 }

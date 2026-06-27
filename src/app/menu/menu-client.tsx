@@ -16,6 +16,8 @@ interface MenuItem {
   mealType?: string;
   mealTypes?: string[];
   quantity: number;
+  description?: string;
+  category?: string;
 }
 
 type Cart = Record<string, Record<string, MenuItem[]>>;
@@ -116,7 +118,7 @@ export default function MenuClient() {
               {menuItems.map((item) => (
                 <div key={item.id} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-sm border border-gray-200">
                     <div>
-                        <h4 className="font-semibold text-lg">{item.name}</h4>
+                        <h4 className="font-semibold text-lg">{item.name || item.category || 'Menu Item'}</h4>
                         {item.discount && item.discount > 0 ? (
                           <div className="flex items-center gap-2">
                             <p className="text-sm text-gray-400 line-through">₹{item.price.toFixed(2)}</p>

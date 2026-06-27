@@ -69,7 +69,7 @@ export default function PublicMenu() {
                 <div className="aspect-square relative overflow-hidden rounded-2xl md:rounded-[56px] mb-4 md:mb-8 shadow-sm group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-500">
                   <img 
                     src={item.image || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?q=80&w=1000&auto=format&fit=crop'} 
-                    alt={item.name} 
+                    alt={item.name || item.category || 'Menu Item'} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                   />
                   <div className="absolute top-2 md:top-8 left-2 md:left-8 flex flex-col gap-1 md:gap-2">
@@ -88,7 +88,7 @@ export default function PublicMenu() {
                 <div className="px-2 md:px-4">
                   <div className="flex justify-between items-start mb-2 md:mb-4">
                     <div>
-                      <h3 className="text-sm md:text-3xl font-black tracking-tighter uppercase leading-tight">{item.name}</h3>
+                      <h3 className="text-sm md:text-3xl font-black tracking-tighter uppercase leading-tight">{item.name || item.category || 'Special Meal'}</h3>
                     </div>
                     <div className="text-right">
                       {item.originalPrice && item.discount ? (

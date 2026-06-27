@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
@@ -16,6 +16,8 @@ const NAV_LINKS = [
   { name: 'Contact', href: '/contact' },
 ];
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+
 // Routes where header should be hidden (even in web mode)
 const HIDE_HEADER_ROUTES = ['/login', '/signup', '/forgot-password', '/onboarding', '/admin', '/delivery-partner'];
 
@@ -29,6 +31,12 @@ export default function SiteHeader() {
   const [isPWAMode, setIsPWAMode] = useState(false);
   const pathname = usePathname();
 
+  // Desktop hover dropdown state
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [dropdownItems, setDropdownItems] = useState<Array<{ title: string; href: string }>>([]);
+  const [dropdownLoading, setDropdownLoading] = useState(false);
+  const subitemsCache = useRef<Record<string, Array<{ title: string; href: string }>>>({});
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
@@ -36,9 +44,49 @@ export default function SiteHeader() {
   }, []);
 
 
-
   // Close mobile menu on route change
   useEffect(() => setIsOpen(false), [pathname]);
+
+  async function fetchSubitemsFor(linkName: string) {
+    try {
+      setDropdownLoading(true);
+      if (linkName === 'Blog') {
+        const res = await fetch(`${API_BASE_URL}/blogs`);
+        const data = await res.json();
+        const blogs = Array.isArray(data) ? data : (data.blogs || data.data || []);
+        return blogs.slice(0, 8).map((b: any) => ({ title: b.title, href: `/blog/${b.slug}` }));
+      }
+
+      if (linkName === 'Menu') {
+        const res = await fetch(`${API_BASE_URL}/menu`);
+        const data = await res.json();
+        const items = data.items || data.data || [];
+        return items.slice(0, 8).map((m: any) => ({ title: m.name || m.title || 'Menu Item', href: `/menu?item=${m._id}` }));
+      }
+
+      if (linkName === 'About') {
+        return [
+          { title: 'Founders', href: '/about' },
+          { title: 'Kitchen Partners', href: '/kitchen-partner' },
+          { title: 'Goals', href: '/about' },
+        ];
+      }
+
+      if (linkName === 'Kitchen Partner') {
+        return [
+          { title: 'Partner With Us', href: '/kitchen-partner#partner-form' },
+          { title: 'How It Works', href: '/kitchen-partner' },
+        ];
+      }
+
+      return [];
+    } catch (err) {
+      console.error('Error fetching subitems for', linkName, err);
+      return [];
+    } finally {
+      setDropdownLoading(false);
+    }
+  }
 
   // Hide header in PWA mode or on auth pages
   // In PWA mode, hide header for all PWA app routes
@@ -53,7 +101,7 @@ export default function SiteHeader() {
   }
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
+    <header onMouseLeave={() => setActiveDropdown(null)} className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? 'bg-white/80 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
@@ -71,13 +119,33 @@ export default function SiteHeader() {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
-              <Link
+              <div
                 key={link.href}
-                href={link.href}
-                className={`text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors ${pathname === link.href ? 'text-primary' : 'text-foreground/70'}`}
+                onMouseEnter={async () => {
+                  // Do not show dropdown for Home or Contact
+                  if (link.name === 'Home' || link.name === 'Contact') {
+                    setActiveDropdown(null);
+                    setDropdownItems([]);
+                    return;
+                  }
+
+                  setActiveDropdown(link.name);
+                  if (subitemsCache.current[link.name]) {
+                    setDropdownItems(subitemsCache.current[link.name]);
+                    return;
+                  }
+                  const items = await fetchSubitemsFor(link.name);
+                  subitemsCache.current[link.name] = items;
+                  setDropdownItems(items);
+                }}
               >
-                {link.name}
-              </Link>
+                <Link
+                  href={link.href}
+                  className={`text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors ${pathname === link.href ? 'text-primary' : 'text-foreground/70'}`}
+                >
+                  {link.name}
+                </Link>
+              </div>
             ))}
           </nav>
 
@@ -98,6 +166,35 @@ export default function SiteHeader() {
       </div>
 
       
+
+        {/* Desktop full-width dropdown panel */}
+        {activeDropdown && (
+          <div className="absolute left-0 right-0 top-full z-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="bg-white h-[30vh] rounded-b-xl shadow-2xl border-t border-gray-100 overflow-auto">
+                <div className="p-4 h-full">
+                  {dropdownLoading ? (
+                    <div className="text-center text-sm text-muted">Loading...</div>
+                  ) : dropdownItems && dropdownItems.length > 0 ? (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 h-full">
+                      {dropdownItems.map((item) => (
+                        <Link
+                          key={`${item.href}-${item.title}`}
+                          href={item.href}
+                          className="block p-4 rounded-lg hover:bg-gray-50 h-full"
+                        >
+                          <div className="font-bold text-sm line-clamp-2">{item.title}</div>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center text-sm text-muted">No items</div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
       {/* Mobile Menu Overlay */}
       {isOpen && (

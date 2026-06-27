@@ -10,6 +10,7 @@ type FormState = {
   bulk: boolean;
   dailyTiffin: boolean;
   description: string;
+  password?: string;
 };
 
 export default function PartnerFormClient() {
@@ -22,6 +23,7 @@ export default function PartnerFormClient() {
     bulk: false,
     dailyTiffin: false,
     description: '',
+    password: '',
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -38,7 +40,7 @@ export default function PartnerFormClient() {
       });
       if (!res.ok) throw new Error('Network error');
       setStatus('success');
-      setForm({ name: '', email: '', phone: '', address: '', instant: false, bulk: false, dailyTiffin: false, description: '' });
+      setForm({ name: '', email: '', phone: '', address: '', instant: false, bulk: false, dailyTiffin: false, description: '', password: '' });
     } catch (err) {
       setStatus('error');
     }
@@ -52,6 +54,21 @@ export default function PartnerFormClient() {
         <input required value={form.email} onChange={(e) => handleChange('email', e.target.value)} type="email" placeholder="Email" className="border px-3 py-2 rounded" />
         <input required value={form.phone} onChange={(e) => handleChange('phone', e.target.value)} placeholder="Phone number" className="border px-3 py-2 rounded" />
         <input value={form.address} onChange={(e) => handleChange('address', e.target.value)} placeholder="Address" className="border px-3 py-2 rounded" />
+        <input 
+          required 
+          value={form.password} 
+          onChange={(e) => {
+            const val = e.target.value.replace(/\D/g, '').slice(0, 4);
+            handleChange('password', val);
+          }} 
+          placeholder="Create 4-digit Login Password" 
+          type="password"
+          inputMode="numeric"
+          pattern="\d{4}" 
+          title="Please enter a 4-digit numeric password"
+          className="border px-3 py-2 rounded bg-primary/5 border-primary/20" 
+        />
+        <p className="text-[10px] text-muted -mt-2 px-1">This will be your login password for the Tiffica App.</p>
 
         <div className="flex gap-4 mt-2">
           <label className="flex items-center gap-2"><input type="checkbox" checked={form.instant} onChange={(e) => handleChange('instant', e.target.checked)} /> Instant</label>
