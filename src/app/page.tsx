@@ -7,8 +7,8 @@ import Link from 'next/link';
 import { ArrowRight, CheckCircle, Clock, Shield, Star, MapPin, Play, Utensils, Award, Smile, Coffee, Download, Loader2 } from 'lucide-react';
 import { useInstallApp } from '@/hooks/useInstallApp';
 import { useOrderAction } from '@/hooks/useOrderAction';
-// App download section removed
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -27,14 +27,15 @@ export default function LandingPage() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Only redirect to dashboard if in PWA mode.
-  // Browser users should stay on the landing page to browse marketing content.
+  // Scroll-driven parallax for the thali that travels between sections
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: parallaxRef,
+    offset: ['start end', 'end start'],
+  });
+  const thaliRotate = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  const thaliY = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
-
-
-
-
-  // Show marketing content for all users (browser and PWA)
   return (
     <div className="bg-white selection:bg-primary selection:text-white pb-20">
       {/* Hero Section */}
@@ -46,7 +47,6 @@ export default function LandingPage() {
         </div>
 
         <div className="relative  mx-auto px-4 sm:px-6 lg:px-8 text-center z-50">
-       
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
@@ -67,7 +67,7 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl sm:text-2xl text-muted max-w-2xl mx-auto mb-12 font-medium"
           >
-            Order the best affordable tiffin in Jaipur 
+            Order the best affordable tiffin in Jaipur
           </motion.p>
 
           <motion.div
@@ -86,7 +86,6 @@ export default function LandingPage() {
                 <Download size={24} />
                 INSTALL APP
               </a>
-
             </div>
             <Link href="/menu" className="flex items-center gap-3 text-base font-black hover:text-primary transition-colors bg-white px-6 py-3 rounded-pill border border-gray-200 shadow-sm sm:bg-transparent sm:px-0 sm:py-0 sm:border-0">
               <div className="w-10 h-10 rounded-pill border-2 border-gray-200 flex items-center justify-center transition-colors sm:w-14 sm:h-14">
@@ -96,23 +95,47 @@ export default function LandingPage() {
             </Link>
           </motion.div>
         </div>
-        {/* Hero Thali Images: slide in on page load */}
-        <motion.img
-          src="/thali01.png"
-          alt="Thali"
+
+        {/* Hero Thali Images: slide in on page load, plus continuous ambient float */}
+        <motion.div
           initial={isNarrow ? { opacity: 0.6, x: 0, y: 140, rotate: 0 } : { opacity: 0.6, x: 180, y: 180, rotate: -90 }}
           animate={isNarrow ? { opacity: 1, x: 60, y: -300, rotate: 0 } : { opacity: 1, x: 0, y: 0, rotate: 0 }}
           transition={{ duration: 0.9, delay: 0.3, ease: 'circOut' }}
-          className="absolute bottom-6 right-6 w-[30vh] sm:w-36 md:w-48 lg:w-[55vh] rounded-2xl block z-10 pointer-events-none"
-        />
+          className="absolute bottom-6 right-6 z-10 pointer-events-none"
+        >
+          <motion.img
+            src="/thali01.png"
+            alt="Thali"
+            animate={{ y: [0, -14, 0], rotate: [0, 3, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-[30vh] sm:w-36 md:w-48 lg:w-[55vh] rounded-2xl block"
+          />
+        </motion.div>
 
-        <motion.img
-          src="/thali02.png"
-          alt="Thali"
+        <motion.div
           initial={isNarrow ? { opacity: 0.6, x: -190, y: -140, rotate: 0 } : { opacity: 0.6, x: -180, y: -180, rotate: -90 }}
           animate={isNarrow ? { opacity: 1, x: -40, y: 40, rotate: 0 } : { opacity: 1, x: 0, y: 0, rotate: 0 }}
           transition={{ duration: 0.9, delay: 0.5, ease: 'circOut' }}
-          className="absolute top-6 left-6 w-[25vh] sm:w-36 md:w-44 lg:w-[45vh] rounded-2xl block z-10 pointer-events-none"
+          className="absolute top-6 left-6 z-10 pointer-events-none"
+        >
+          <motion.img
+            src="/thali02.png"
+            alt="Thali"
+            animate={{ y: [0, 12, 0], rotate: [0, -3, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+            className="w-[25vh] sm:w-36 md:w-44 lg:w-[45vh] rounded-2xl block"
+          />
+        </motion.div>
+
+        {/* Small spinning thali accent, purely decorative, fills empty hero space */}
+        <motion.img
+          src="/thali01.png"
+          alt=""
+          aria-hidden
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 0.5, scale: 1, rotate: 360 }}
+          transition={{ opacity: { duration: 1, delay: 1 }, scale: { duration: 1, delay: 1 }, rotate: { duration: 24, repeat: Infinity, ease: 'linear' } }}
+          className="hidden lg:block absolute bottom-[18%] left-[8%] w-20 rounded-full shadow-xl z-10 pointer-events-none"
         />
 
         {/* Mobile-only lady hero image (top-right beside thali) */}
@@ -147,10 +170,26 @@ export default function LandingPage() {
         </div>
       </section>
 
-
+      {/* Illustration Space — reserved for a custom hero-companion illustration (e.g. hand-drawn kitchen / chef scene) */}
+      <section className="px-4">
+        <div className="max-w-7xl mx-auto rounded-[56px] bg-gradient-to-br from-primary/10 via-secondary/10 to-white border border-gray-100 min-h-[280px] flex items-center justify-center relative overflow-hidden">
+          {/* TODO: replace with /illustrations/home-illustration.svg */}
+          <motion.div
+            animate={{ y: [0, -14, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            className="text-7xl sm:text-8xl"
+            aria-hidden
+          >
+            🍛🥘🫓
+          </motion.div>
+          <span className="absolute bottom-4 right-6 text-[10px] uppercase tracking-widest text-foreground/30 font-bold">
+            Illustration space
+          </span>
+        </div>
+      </section>
 
       {/* How It Works Section */}
-      <section className="py-32 bg-gray-50 overflow-hidden">
+      <section className="py-32 bg-gray-50 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -191,6 +230,17 @@ export default function LandingPage() {
             ))}
           </div>
         </div>
+
+        {/* Scroll-linked spinning thali divider, travels with the page as you scroll this section */}
+        <div ref={parallaxRef} className="absolute -bottom-10 right-[6%] hidden lg:block pointer-events-none">
+          <motion.img
+            src="/thali02.png"
+            alt=""
+            aria-hidden
+            style={{ rotate: thaliRotate, y: thaliY }}
+            className="w-28 rounded-full shadow-2xl opacity-70"
+          />
+        </div>
       </section>
 
       {/* Meet Our Chefs Section */}
@@ -209,6 +259,17 @@ export default function LandingPage() {
                 src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1000&auto=format&fit=crop"
                 alt="Chef at Work"
                 className="rounded-[60px] shadow-2xl w-full aspect-[4/3] object-cover"
+              />
+              {/* small accent thali peeking from behind the chef photo */}
+              <motion.img
+                src="/thali01.png"
+                alt=""
+                aria-hidden
+                initial={{ opacity: 0, scale: 0.7, rotate: -20 }}
+                whileInView={{ opacity: 1, scale: 1, rotate: -8 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="hidden md:block absolute -bottom-8 -left-8 w-32 rounded-2xl shadow-2xl border-4 border-white"
               />
             </motion.div>
             <motion.div
@@ -248,6 +309,11 @@ export default function LandingPage() {
               <Link href="/about" className="inline-flex items-center gap-3 text-lg font-black hover:text-primary transition-colors">
                 LEARN MORE ABOUT US <ArrowRight />
               </Link>
+              <div className="mt-6">
+                <Link href="/kitchen-partner" className="inline-flex items-center gap-3 text-sm font-black text-primary hover:underline">
+                  Become a Kitchen Partner <ArrowRight size={16} />
+                </Link>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -371,6 +437,16 @@ export default function LandingPage() {
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#f97316_1px,transparent_1px)] [background-size:20px_20px]" />
             <div className="absolute -top-[20%] -right-[10%] w-[50%] h-[80%] bg-primary/20 blur-[100px] rounded-full" />
 
+            {/* faint spinning thali silhouette in the CTA backdrop */}
+            <motion.img
+              src="/thali01.png"
+              alt=""
+              aria-hidden
+              animate={{ rotate: 360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+              className="hidden lg:block absolute -bottom-16 -left-16 w-72 opacity-10 pointer-events-none"
+            />
+
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -407,14 +483,11 @@ export default function LandingPage() {
                   <Download size={24} />
                   INSTALL app
                 </a>
-           
               </div>
-            
             </motion.div>
           </motion.div>
         </div>
       </section>
-
     </div>
   );
 }
